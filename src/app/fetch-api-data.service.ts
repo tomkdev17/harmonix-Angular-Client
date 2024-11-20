@@ -3,21 +3,13 @@ import { catchError, map } from 'rxjs/operators';
 //removed the word internal from the above catchError import
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { console } from 'inspector';
+
 
 const apiUrl = "https://harmonix-daebd0a88259.herokuapp.com/";
 
 @Injectable({
   providedIn: 'root'
 })
-
-export class UserRegistrationService {
-  constructor(private http: HttpClient) {
-
-  }
-  
-}; 
-
 
 export class FetchApiDataService {
 
@@ -33,13 +25,23 @@ export class FetchApiDataService {
   public userLogin(userDetails: any): Observable<any> {
     return this.http
       .post(apiUrl + 'login', userDetails)
-      .pipe(catchError(this.handleError));
+      .pipe(
+        map((response) => {
+          const extractedData = this.extractResponseData(response)
+          if (extractedData && extractedData.user) {
+            localStorage.setItem('token', extractedData.user);
+            console.log(`token: ${extractedData.user}`)
+          }
+          return extractedData; 
+        }), 
+        catchError(this.handleError)
+        );
   };
 
   public getAllSongs(): Observable<any> {
     const token = localStorage.getItem('token');
 
-    return this.http.get(apiUrl + 'songs', {headers: new HttpHeaders(
+    return this.http.get<any>(apiUrl + 'songs', {headers: new HttpHeaders(
         {Authorization: 'Bearer ' + token,}
       )}).pipe(
         map(this.extractResponseData),
@@ -50,7 +52,7 @@ export class FetchApiDataService {
   public getOneSong(title: string): Observable<any> {
     const token = localStorage.getItem('token');
 
-    return this.http.get(apiUrl + `songs/${title}`, {headers: new HttpHeaders(
+    return this.http.get<any>(apiUrl + `songs/${title}`, {headers: new HttpHeaders(
       {Authorization: 'Bearer ' + token,}
     )}).pipe(
       map(this.extractResponseData),
@@ -61,7 +63,7 @@ export class FetchApiDataService {
   public getArtist(artist: string): Observable<any> {
     const token = localStorage.getItem('token');
 
-    return this.http.get(apiUrl + `songs/artist/${artist}`, {headers: new HttpHeaders(
+    return this.http.get<any>(apiUrl + `songs/artist/${artist}`, {headers: new HttpHeaders(
       {Authorization: 'Bearer ' + token,}
     )}).pipe(
       map(this.extractResponseData),
@@ -72,7 +74,7 @@ export class FetchApiDataService {
   public getGenre(genre: string): Observable<any> {
     const token = localStorage.getItem('token');
 
-    return this.http.get(apiUrl + `songs/genre/${genre}`, {headers: new HttpHeaders(
+    return this.http.get<any>(apiUrl + `songs/genre/${genre}`, {headers: new HttpHeaders(
       {Authorization: 'Bearer ' + token,}
     )}).pipe(
       map(this.extractResponseData),
@@ -83,7 +85,7 @@ export class FetchApiDataService {
   public getUser(userId: string): Observable<any> {
     const token = localStorage.getItem('token');
 
-    return this.http.get(apiUrl + `users/${userId}`, {headers: new HttpHeaders(
+    return this.http.get<any>(apiUrl + `users/${userId}`, {headers: new HttpHeaders(
       {Authorization : 'Bearer ' + token,}
     )}).pipe(
       map(this.extractResponseData),
@@ -136,9 +138,9 @@ export class FetchApiDataService {
     );
   }
 
-  private extractResponseData(res: Response): any {
+  private extractResponseData(res: any): any {
     const body = res; 
-    return body || { };
+    return body || {};
   }
 
   private handleError(error: HttpErrorResponse): any {
