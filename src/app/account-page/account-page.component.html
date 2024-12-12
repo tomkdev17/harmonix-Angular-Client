@@ -1,0 +1,13 @@
+<div>
+    <app-user-info [user]="user" ></app-user-info>
+    <app-user-update-form [user]="user" (userUpdated)="handleUserUpdate()" ></app-user-update-form>
+</div>
+<div class="deleteUser">
+    <p>Pressing this button will permanently remove your account from Harmonix' database: </p>
+    <button
+        mat-raised-button
+        (click)="bybyUser()"
+    >
+        Delete account
+    </button>
+</div>

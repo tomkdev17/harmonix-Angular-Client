@@ -1,0 +1,33 @@
+<div class="card-container">
+    <mat-card *ngFor="let song of songs; let i=index;">
+        <mat-card-content>
+            <mat-card-title>{{song.Title}}</mat-card-title>
+            <mat-card-subtitle>by {{song.Artist.Name}}</mat-card-subtitle>
+            <div class="card-image">
+                <img src={{song.ImagePath}} alt="album cover of {{song.Title}}"/>
+            </div>
+            <mat-card-actions>
+                <button
+                    mat-button
+                    color="primary"
+                    (click)="openArtistDialog(song.Artist.Name)"
+                >
+                    {{song.Artist.Name}}
+                </button>
+                <button
+                    mat-button
+                    color="primary"
+                    (click)="openGenreDialog(song.Genre.Name)"
+                >
+                    {{song.Genre.Name}}
+                </button>
+                <button
+                    mat-button
+                    (click)="toggleFavorite(song._id)"
+                >
+                    <mat-icon>{{isFavorite(song._id) ? 'favorite' : 'favorite_border'}}</mat-icon>
+                </button>
+            </mat-card-actions>
+        </mat-card-content>
+    </mat-card>
+</div>

@@ -22,7 +22,6 @@ export class UserRegistrationFormComponent implements OnInit {
 
   registerUser(): void {
     this.fetchApiData.userRegistration(this.userData).subscribe((result) => {
-      //successful user registration to go here later
 
       this.dialogRef.close();
       

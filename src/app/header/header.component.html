@@ -1,0 +1,14 @@
+<div class="container">
+    <mat-toolbar color="primary">
+        <span class="app-title">
+            <h1>Harmonix</h1>
+        </span>
+        <span class="spacer"></span>
+        <div *ngIf="isLoggedIn; else loggedOut">
+            <button mat-button (click)="goHome()">Home</button>
+            <button mat-button (click)="goToAccount()">Account</button>
+            <button mat-button (click)="logout()">Logout</button>
+        </div>
+        <ng-template #loggedOut></ng-template>
+    </mat-toolbar>
+</div>

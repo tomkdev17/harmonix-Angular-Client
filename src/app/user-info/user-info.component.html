@@ -1,0 +1,12 @@
+<div class="user-card">
+    <mat-card *ngIf="user">
+        <mat-card-header>
+            <mat-card-title>Account Details:</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <p>Username: {{user.Username}}</p>
+            <p>Email: {{user.Email}}</p>
+            <p>Birthday: {{user.Birthday}}</p>
+        </mat-card-content>
+    </mat-card>
+</div>

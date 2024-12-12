@@ -1,8 +1,11 @@
 import { Injectable } from '@angular/core';
-import { catchError, map } from 'rxjs/operators'; 
+import { catchError, map,  } from 'rxjs/operators'; 
 //removed the word internal from the above catchError import
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { Observable, throwError, tap } from 'rxjs';
+import { response } from 'express';
+import { AuthService } from './auth.service';
+
 
 
 const apiUrl = "https://harmonix-daebd0a88259.herokuapp.com/";
@@ -13,7 +16,10 @@ const apiUrl = "https://harmonix-daebd0a88259.herokuapp.com/";
 
 export class FetchApiDataService {
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private authService: AuthService
+  ) { }
 
   public userRegistration(userDetails: any): Observable<any> {
     console.log(userDetails);
@@ -27,17 +33,24 @@ export class FetchApiDataService {
       .post(apiUrl + 'login', userDetails)
       .pipe(
         map((response) => {
-          const extractedData = this.extractResponseData(response)
-          if (extractedData && extractedData.user) {
-            localStorage.setItem('token', extractedData.user);
-            console.log(`token: ${extractedData.user}`)
-          }
-          return extractedData; 
+          const extractedData = this.extractResponseData(response) ; 
+          return extractedData ;
         }), 
-        catchError(this.handleError)
-        );
-  };
+        tap((extractedData) => {
+          if(extractedData && extractedData.user) {
+            const token = extractedData.user;
+            const username = userDetails.Username;
+            
+            localStorage.setItem('token', token);
+            localStorage.setItem('username', username);
 
+            this.authService.login();
+          }
+        }),
+        catchError(this.handleError) 
+      );
+  }
+  
   public getAllSongs(): Observable<any> {
     const token = localStorage.getItem('token');
 
@@ -84,19 +97,28 @@ export class FetchApiDataService {
 
   public getUser(userId: string): Observable<any> {
     const token = localStorage.getItem('token');
-
     return this.http.get<any>(apiUrl + `users/${userId}`, {headers: new HttpHeaders(
       {Authorization : 'Bearer ' + token,}
     )}).pipe(
-      map(this.extractResponseData),
+      // map(this.extractResponseData),
+      map((response) => {
+        const data = this.extractResponseData(response);
+        if(data && data.Birthday) {
+          data.Birthday = this.formatDate(data.Birthday);
+        }
+        return data;
+      }),
       catchError(this.handleError)
     );
   }
 
-  public addFavorite(userId: string, songId: string): Observable<any> {
+  public addFavorite(songId: string): Observable<any> {
     const token = localStorage.getItem('token');
+    const userId = localStorage.getItem('username');
 
-    return this.http.post(apiUrl + `users/${userId}/songs/${songId}`, {headers: new HttpHeaders(
+    return this.http.post(apiUrl + `users/${userId}/songs/${songId}`, 
+    null,
+    {headers: new HttpHeaders(
       {Authorization : 'Bearer ' + token,}
     )}).pipe(
       map(this.extractResponseData),
@@ -104,10 +126,12 @@ export class FetchApiDataService {
     );
   }
 
-  public removeFavorite(userId: string, songId: string): Observable<any> {
+  public removeFavorite(songId: string): Observable<any> {
     const token = localStorage.getItem('token');
+    const userId = localStorage.getItem('username');
 
-    return this.http.delete(apiUrl + `users/${userId}/songs/${songId}`, {headers: new HttpHeaders(
+    return this.http.delete(apiUrl + `users/${userId}/songs/${songId}`, 
+    {headers: new HttpHeaders(
       {Authorization : 'Bearer ' + token,}
     )}).pipe(
       map(this.extractResponseData),
@@ -117,8 +141,9 @@ export class FetchApiDataService {
 
   public editUser(userDetails: any): Observable<any> {
     const token = localStorage.getItem('token');
+    let username = localStorage.getItem('username');
 
-    return this.http.put(apiUrl + `users/${userDetails.Username}`, userDetails,
+    return this.http.put(apiUrl + `users/${username}`, userDetails,
     {headers: new HttpHeaders(
       {Authorization : 'Bearer ' + token,}
     )}).pipe(
@@ -127,13 +152,16 @@ export class FetchApiDataService {
     );
   }
 
-  public deleteUser(userId: string): Observable<any> {
+  public deleteUser(user: string): Observable<any> {
     const token = localStorage.getItem('token');
+    const username = localStorage.getItem('username');
 
-    return this.http.delete(apiUrl + `users/${userId}`, {headers: new HttpHeaders(
-      {Authorization : 'Bearer ' + token,}
-    )}).pipe(
-      map(this.extractResponseData),
+    return this.http.delete(apiUrl + `users/${username}`, {headers: new HttpHeaders({
+      Authorization : 'Bearer ' + token,
+    }),
+    responseType: 'text'
+    }).pipe(
+      // map(this.extractResponseData),
       catchError(this.handleError)
     );
   }
@@ -143,17 +171,32 @@ export class FetchApiDataService {
     return body || {};
   }
 
-  private handleError(error: HttpErrorResponse): any {
-    if(error.error instanceof ErrorEvent) {
-      console.error('An error occurred:', error.error.message);
+  private formatDate(dateString: string): string {
+    const date = new Date(dateString);
+    const month = date.getMonth() + 1;
+    const day = date.getDate() + 1;
+    const year = date.getFullYear();
+
+    return `${month.toString().padStart(2, '0')}/${day.toString().padStart(2, '0')}/${year}`;
+  }
+
+  private handleError(error: HttpErrorResponse): Observable<never> {
+    // Log the full error for debugging
+    console.error('Full error object:', error);
+  
+    let errorMessage = 'An unknown error occurred!';
+  
+    // Check if the error has a meaningful message
+    if (error.error instanceof ErrorEvent) {
+      // Client-side or network error
+      errorMessage = `Client-side error: ${error.error.message}`;
     } else {
-      console.error(
-        `Error status code ${error.status},` + 
-        `Error body is : ${error.error}`
-      );
+      // Backend returned an unsuccessful response code
+      errorMessage = `Server-side error: Status code ${error.status}, ` +
+                     `Error body: ${JSON.stringify(error.error)}`;
     }
-    return throwError(
-      'Something bad happened, please try again later.'
-    );
+  
+    console.error(errorMessage); // Log the readable error
+    return throwError(() => new Error(errorMessage)); // Return the parsed error
   }
 }
