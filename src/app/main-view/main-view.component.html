@@ -1,0 +1,13 @@
+<div class="song-display">
+    <app-song-card
+        *ngFor="let song of songs"
+        [song]="song"
+        [isFavorite]="isFavorite"
+        [user]="user"
+        [favs]="favs"   
+    >
+    </app-song-card>
+</div>
+
+<!-- 
+        [toggleFavorite]="toggleFavorite" -->

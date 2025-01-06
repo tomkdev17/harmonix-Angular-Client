@@ -1,5 +1,5 @@
-<div class="card-container">
-    <mat-card *ngFor="let song of songs; let i=index;">
+<div class="card-container" *ngIf="user">
+    <mat-card>
         <mat-card-content>
             <mat-card-title>{{song.Title}}</mat-card-title>
             <mat-card-subtitle>by {{song.Artist.Name}}</mat-card-subtitle>

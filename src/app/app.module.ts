@@ -26,10 +26,11 @@ import { HeaderComponent } from './header/header.component';
 import { AccountPageComponent } from './account-page/account-page.component';
 import { UserInfoComponent } from './user-info/user-info.component';
 import { UserUpdateFormComponent } from './user-update-form/user-update-form.component';
+import { MainViewComponent } from './main-view/main-view.component';
 
 const appRoutes: Routes = [
   {path: 'welcome', component: WelcomePageComponent }, 
-  {path: 'songs', component: SongCardComponent },
+  {path: 'mainview', component: MainViewComponent },
   {path: 'account', component: AccountPageComponent },
   {path: '', redirectTo: 'welcome', pathMatch: 'prefix'},
 ]; 
@@ -46,7 +47,8 @@ const appRoutes: Routes = [
     HeaderComponent,
     AccountPageComponent,
     UserInfoComponent,
-    UserUpdateFormComponent
+    UserUpdateFormComponent,
+    MainViewComponent
   ],
   imports: [
     BrowserModule,

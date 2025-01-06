@@ -1,0 +1,38 @@
+.song-display {
+    display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      padding: 20px;
+      width: 100%;
+      box-sizing: border-box;
+  }
+  
+//   .card-image img {
+//     width: 100%; 
+//     height: auto;
+//   }
+  
+//   mat-card-subtitle {
+//       margin-bottom: 10px;
+//   }
+  
+  @media (max-width: 1024px) {
+      .song-display {
+        grid-template-columns: repeat(3, 1fr); 
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .song-display {
+        grid-template-columns: repeat(2, 1fr); 
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .song-display {
+        grid-template-columns: 1fr; 
+      }
+    }
+
+
+    

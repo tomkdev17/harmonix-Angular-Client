@@ -22,7 +22,7 @@ export class HeaderComponent implements OnInit {
   }
 
   goHome(): void {
-    this.router.navigate(['songs']); 
+    this.router.navigate(['mainview']); 
   }
 
   goToAccount(): void {
