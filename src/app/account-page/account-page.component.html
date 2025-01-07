@@ -1,6 +1,20 @@
 <div>
-    <app-user-info [user]="user" ></app-user-info>
+    <app-user-info [user]="user"></app-user-info>
     <app-user-update-form [user]="user" (userUpdated)="handleUserUpdate()" ></app-user-update-form>
+    <div *ngIf="favs.length > 0; else noFavorites">
+        <div class="favorites-array">
+            <app-song-card
+                *ngFor="let song of songs"
+                [song]=song
+                [isFavorite]=isFavorite
+                [user]=user
+                [favs]=favs
+            ></app-song-card>
+        </div>
+    </div>
+    <ng-template #noFavorites>
+        <p>You have no favorite songs yet!</p>
+    </ng-template>
 </div>
 <div class="deleteUser">
     <p>Pressing this button will permanently remove your account from Harmonix' database: </p>

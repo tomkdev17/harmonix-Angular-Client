@@ -10,9 +10,10 @@ import { FetchApiDataService } from '../fetch-api-data.service';
 export class MainViewComponent {
 
   songs: any[] = [];
+  favs: any[] = [];
   username: any | null = null;
   user: any = null;
-  favs: any[] = []; 
+   
 
   constructor(
     public fetchApiData: FetchApiDataService
