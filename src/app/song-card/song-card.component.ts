@@ -1,9 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { FetchApiDataService } from '../fetch-api-data.service';
 import { Observable } from 'rxjs';
 import { ArtistCardComponent } from '../artist-card/artist-card.component';
 import { GenreCardComponent } from '../genre-card/genre-card.component';
+import { EventEmitter } from '@angular/core';
 
 
 @Component({
@@ -16,6 +17,7 @@ export class SongCardComponent {
   @Input() user : any; 
   @Input() isFavorite! : (songId : string) => boolean; 
   @Input() favs! : any[]; 
+  @Output() songUnfavorited : EventEmitter<string> = new EventEmitter<string>();
 
   constructor(
     public fetchApiData: FetchApiDataService,
@@ -47,6 +49,9 @@ export class SongCardComponent {
     toggleFavorite(songId:string): void {
 
       const apiCall = this.isFavorite(songId) ? this.fetchApiData.removeFavorite(songId) : this.fetchApiData.addFavorite(songId);
+      
+      //this function allows the profile view to remove SongCards from the favorites array. 
+      this.songUnfavorited.emit(songId);
 
       apiCall.subscribe({
         next: (res) => {

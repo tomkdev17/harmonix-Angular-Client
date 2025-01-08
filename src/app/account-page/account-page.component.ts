@@ -30,12 +30,12 @@ export class AccountPageComponent implements OnInit {
   ngOnInit(): void {
     this.username = localStorage.getItem('username');
     this.showUser();
-    this.getFavs();
+    this.getOnlyFavs();
   }
   
-  getFavs(): void {
+  getOnlyFavs(): void {
     this.fetchApiData.getAllSongs().subscribe((res: any) => {
-      this.songs = res.filter(song => this.user.Favorites.includes(song._id)); 
+      this.songs = res.filter(song => this.favs.includes(song._id)); 
       console.log(this.songs);
       return this.songs; 
     });
@@ -53,6 +53,11 @@ export class AccountPageComponent implements OnInit {
 
   isFavorite(songId: string): boolean {
     return this.favs.includes(songId) ? true : false ; 
+  }
+  removeFromFavorites(songId: string): void {
+    this.favs = this.favs.filter(song => song !== songId);
+    this.songs = this.songs.filter(song => this.favs.includes(song._id)); 
+    console.log("removeFrom Favorites is doing it's job");
   }
 
   handleUserUpdate(): void {

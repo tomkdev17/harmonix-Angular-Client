@@ -12,13 +12,16 @@
 
             <mat-card-content>
                 <div *ngIf="favs.length > 0; else noFavorites" class="favorites-array">
-                    <app-song-card
-                        *ngFor="let song of songs"
-                        [song]=song
-                        [isFavorite]=isFavorite
-                        [user]=user
-                        [favs]=favs>
-                    </app-song-card>
+                        <app-song-card
+                            *ngFor="let song of songs"
+                            [song]=song
+                            [isFavorite]=isFavorite
+                            [user]=user
+                            [favs]=favs
+                            (songUnfavorited)="removeFromFavorites($event)"
+                        >
+
+                        </app-song-card>
                 </div>
 
                 <ng-template #noFavorites>
