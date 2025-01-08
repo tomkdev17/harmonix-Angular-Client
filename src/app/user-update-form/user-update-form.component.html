@@ -1,47 +1,50 @@
 <div class="update-user-card">
         <mat-card>
             <mat-card-header>
-                <mat-card-title>Update your info:</mat-card-title>
+                <h2>Update your info</h2>
             </mat-card-header>
             <mat-card-content>
                 <form>
-                    <mat-form-field>
-                        <input
-                            matInput
-                            [(ngModel)]="newUserData.Username"
-                            type="text"
-                            name="Username"
-                            required
-                        >
-                    </mat-form-field>
-                    <mat-form-field>
-                        <input
-                            matInput
-                            [(ngModel)]="newUserData.Password"
-                            placeholder="Password"
-                            type="password"
-                            name="Password"
-                            required
-                        >
-                    </mat-form-field>
-                    <mat-form-field>
-                        <input
-                            matInput
-                            [(ngModel)]="newUserData.Email"
-                            type="email"
-                            name="Email"
-                            required
-                        >
-                    </mat-form-field>
-                    <mat-form-field>
-                        <input
-                            matInput
-                            [(ngModel)]="newUserData.Birthday"
-                            type="date"
-                            name="Birthday"
-                            required
-                        >
-                    </mat-form-field>
+                    <div class="form">
+                        
+                        <mat-form-field>
+                            <input
+                                matInput
+                                [(ngModel)]="newUserData.Username"
+                                type="text"
+                                name="Username"
+                                required
+                            >
+                        </mat-form-field>
+                        <mat-form-field>
+                            <input
+                                matInput
+                                [(ngModel)]="newUserData.Password"
+                                placeholder="Password"
+                                type="password"
+                                name="Password"
+                                required
+                            >
+                        </mat-form-field>
+                        <mat-form-field>
+                            <input
+                                matInput
+                                [(ngModel)]="newUserData.Email"
+                                type="email"
+                                name="Email"
+                                required
+                            >
+                        </mat-form-field>
+                        <mat-form-field>
+                            <input
+                                matInput
+                                [(ngModel)]="newUserData.Birthday"
+                                type="date"
+                                name="Birthday"
+                                required
+                            >
+                        </mat-form-field>
+                    </div>
                 </form>
             </mat-card-content>
             <mat-card-actions>

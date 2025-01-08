@@ -1,0 +1,26 @@
+.main {
+    padding: 25px; 
+}
+mat-card {
+    text-align: center;
+}
+mat-card-header {
+    flex-direction: column; 
+}
+.favorites-array {
+    display: flex; 
+    overflow-x: auto; 
+    gap: 16px;
+    padding: 16px;
+    scroll-behavior: smooth;
+}
+.fav-container {
+    margin: 10px; 
+}
+.delete-user {
+    margin-inline:150px;
+}
+.make-them-stay {
+    justify-content: center;
+    margin-bottom: 10px;
+}

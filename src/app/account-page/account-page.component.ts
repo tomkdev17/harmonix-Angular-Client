@@ -1,8 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FetchApiDataService } from '../fetch-api-data.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
+import { DeleteAccountComponent } from '../delete-account/delete-account.component';
 
 @Component({
   selector: 'app-account-page',
@@ -20,6 +22,7 @@ export class AccountPageComponent implements OnInit {
   constructor(
     public fetchApiData: FetchApiDataService, 
     public snackbar: MatSnackBar,
+    public dialog: MatDialog,
     private router: Router,
     private authService: AuthService
   ) {}
@@ -59,21 +62,8 @@ export class AccountPageComponent implements OnInit {
     }
   }
 
-  bybyUser(): void {
-    this.fetchApiData.deleteUser(this.username).subscribe(
-      () => {
-      this.snackbar.open('Account successfully deleted.', 'OK', {
-        duration: 3000
-      });
-      this.authService.logout();
-      // localStorage.clear();
-      this.router.navigate(['welcome'])
-    }, (error) => {
-      this.snackbar.open('Failed to delete account', 'OK', {
-        duration: 3000
-      });
-      console.error('Error deleting user', error);
-    }
-    ); 
+  openDeleteDialog(): void {
+    this.dialog.open(DeleteAccountComponent, {width: '300px'});
   }
+  
 }

@@ -1,0 +1,22 @@
+<mat-card>
+    <mat-card-header>Are you sure that you want to delete your account?</mat-card-header>
+    <mat-card-content>
+        
+        <p>This will permanently remove your account from our database. </p>
+
+        <button 
+            (click)="bybyUser()"
+            mat-button
+            color="warn"    
+        >
+            Yes
+        </button>
+        <button 
+            (click)="closeDialog()"
+            mat-raised-button
+            color="accent"
+        >
+            No
+        </button>
+    </mat-card-content>
+</mat-card>

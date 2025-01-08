@@ -1,0 +1,17 @@
+mat-card {
+    text-align: center;
+    margin: 100px;
+}
+mat-card-header {
+    flex-direction: column; 
+}
+mat-card-actions {
+    justify-content: center; 
+}
+.form {
+    justify-content: center;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 10px;
+    padding: 20px;
+}

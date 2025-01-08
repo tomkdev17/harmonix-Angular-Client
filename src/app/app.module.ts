@@ -27,6 +27,7 @@ import { AccountPageComponent } from './account-page/account-page.component';
 import { UserInfoComponent } from './user-info/user-info.component';
 import { UserUpdateFormComponent } from './user-update-form/user-update-form.component';
 import { MainViewComponent } from './main-view/main-view.component';
+import { DeleteAccountComponent } from './delete-account/delete-account.component';
 
 const appRoutes: Routes = [
   {path: 'welcome', component: WelcomePageComponent }, 
@@ -48,7 +49,8 @@ const appRoutes: Routes = [
     AccountPageComponent,
     UserInfoComponent,
     UserUpdateFormComponent,
-    MainViewComponent
+    MainViewComponent,
+    DeleteAccountComponent
   ],
   imports: [
     BrowserModule,
