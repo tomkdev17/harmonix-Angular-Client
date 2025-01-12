@@ -11,14 +11,14 @@ mat-card-header {
     display: flex; 
     overflow-x: auto; 
     gap: 16px;
-    padding: 16px;
+    // padding: 16px;
     scroll-behavior: smooth;
 }
 .fav-container {
     margin: 10px; 
 }
 .delete-user {
-    margin-inline:150px;
+    margin: 10px; 
 }
 .make-them-stay {
     justify-content: center;

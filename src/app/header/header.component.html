@@ -4,7 +4,7 @@
             <h1>Harmonix</h1>
         </span>
         <span class="spacer"></span>
-        <div *ngIf="isLoggedIn; else loggedOut">
+        <div *ngIf="isLoggedIn; else loggedOut" class="links">
             <button mat-button (click)="goHome()">Home</button>
             <button mat-button (click)="goToAccount()">Account</button>
             <button mat-button (click)="logout()">Logout</button>

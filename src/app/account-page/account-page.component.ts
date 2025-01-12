@@ -54,6 +54,7 @@ export class AccountPageComponent implements OnInit {
   isFavorite(songId: string): boolean {
     return this.favs.includes(songId) ? true : false ; 
   }
+  
   removeFromFavorites(songId: string): void {
     this.favs = this.favs.filter(song => song !== songId);
     this.songs = this.songs.filter(song => this.favs.includes(song._id)); 

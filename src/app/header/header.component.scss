@@ -1,11 +1,14 @@
-// .container {
-// }
 
+.spacer {
+    flex: 1 1 auto; 
+}
 .app-title {
     font-size: 50px;
     font-weight: bold;
 }
-
-.spacer {
-    flex: 1 1 auto
+@media screen and (max-width: 450px) {
+    .app-title {
+        font-size: 30px; 
+    }
 }
+
