@@ -33,14 +33,12 @@
         </mat-card>
 
     </div>
-
-    <app-user-update-form
-        [user]="user" 
-        (userUpdated)="handleUserUpdate()"
-    ></app-user-update-form>
+    <div class="update-user">
+        <app-user-update-form [user]="user" (userUpdated)="handleUserUpdate()"></app-user-update-form>
+    </div>
     
     <mat-card class="delete-user">
-        <mat-card-header><h2>Deactivate account</h2></mat-card-header>
+        <mat-card-header><h2>Delete your account</h2></mat-card-header>
         <mat-card-actions class="make-them-stay">
             <button
             mat-raised-button

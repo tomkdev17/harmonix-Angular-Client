@@ -1,8 +1,10 @@
 <div class="card-container" *ngIf="user">
     <mat-card>
+        <mat-card-header class="head">
+                <mat-card-title>{{song.Title}}</mat-card-title>
+                <mat-card-subtitle>by {{song.Artist.Name}}</mat-card-subtitle>
+        </mat-card-header>
         <mat-card-content>
-            <mat-card-title>{{song.Title}}</mat-card-title>
-            <mat-card-subtitle>by {{song.Artist.Name}}</mat-card-subtitle>
             <div class="card-image">
                 <img src={{song.ImagePath}} alt="album cover of {{song.Title}}"/>
             </div>
@@ -23,6 +25,7 @@
                 </button>
                 <button
                     mat-button
+                    color="accent"
                     (click)="toggleFavorite(song._id)"
                 >
                     <mat-icon>{{isFavorite(song._id) ? 'favorite' : 'favorite_border'}}</mat-icon>
