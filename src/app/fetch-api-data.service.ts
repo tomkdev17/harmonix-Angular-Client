@@ -100,7 +100,6 @@ export class FetchApiDataService {
     return this.http.get<any>(apiUrl + `users/${userId}`, {headers: new HttpHeaders(
       {Authorization : 'Bearer ' + token,}
     )}).pipe(
-      // map(this.extractResponseData),
       map((response) => {
         const data = this.extractResponseData(response);
         if(data && data.Birthday) {
@@ -177,26 +176,19 @@ export class FetchApiDataService {
     const day = date.getDate() + 1;
     const year = date.getFullYear();
 
-    return `${month.toString().padStart(2, '0')}/${day.toString().padStart(2, '0')}/${year}`;
+    return `${year}/${month.toString().padStart(2, '0')}/${day.toString().padStart(2, '0')}`;
   }
 
   private handleError(error: HttpErrorResponse): Observable<never> {
-    // Log the full error for debugging
-    console.error('Full error object:', error);
-  
+
+    console.error('Full error object:', error);  
     let errorMessage = 'An unknown error occurred!';
   
-    // Check if the error has a meaningful message
     if (error.error instanceof ErrorEvent) {
-      // Client-side or network error
       errorMessage = `Client-side error: ${error.error.message}`;
     } else {
-      // Backend returned an unsuccessful response code
-      errorMessage = `Server-side error: Status code ${error.status}, ` +
-                     `Error body: ${JSON.stringify(error.error)}`;
+      errorMessage = `Server-side error: Status code ${error.status}, ` + `Error body: ${JSON.stringify(error.error)}`;
     }
-  
-    console.error(errorMessage); // Log the readable error
-    return throwError(() => new Error(errorMessage)); // Return the parsed error
+    return throwError(() => new Error(errorMessage)); 
   }
 }

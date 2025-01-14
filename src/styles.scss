@@ -42,48 +42,8 @@ html, body {
   height: 100%;
   background-color: mat.get-color-from-palette($harmonix-Angular-Client-primary, 200); 
 }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-
-
-
-
-// // Custom Theming for Angular Material
-// // For more information: https://material.angular.io/guide/theming
-// @use '@angular/material' as mat;
-
-// // Include the common styles for Angular Material. We include this here so that you only
-// // have to load a single css file for Angular Material in your app.
-// @include mat.core();
-
-// // Define the palettes for your theme
-// $harmonix-Angular-Client-primary: mat.define-palette(mat.$green-palette);
-// $harmonix-Angular-Client-accent: mat.define-palette(mat.$amber-palette);
-// $harmonix-Angular-Client-warn: mat.define-palette(mat.$red-palette);
-
-// // Create the theme object
-// $harmonix-Angular-Client-theme: mat.define-light-theme((
-//   color: (
-//     primary: $harmonix-Angular-Client-primary,
-//     accent: $harmonix-Angular-Client-accent,
-//     warn: $harmonix-Angular-Client-warn,
-//   )
-// ));
-
-// // Apply the theme to all Angular Material components
-// @include mat.all-component-themes($harmonix-Angular-Client-theme);
-
-// // Generate the CSS variables for the theme
-// :root {
-//   --mat-primary: mat.get-color-from-palette($harmonix-Angular-Client-primary);
-//   --mat-accent: mat.get-color-from-palette($harmonix-Angular-Client-accent);
-// }
-
-// html, body {
-//   height: 100%;
-//   background-color: mat.get-color-from-palette($harmonix-Angular-Client-primary, 50); 
-// }
-
-// body {
-//   margin: 0;
-//   font-family: Roboto, "Helvetica Neue", sans-serif;
-// }
+body { 
+  margin: 0; 
+  // font-family: Roboto, "Helvetica Neue", sans-serif; 
+  font-family: Kanit, sans-serif; 
+}
